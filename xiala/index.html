@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下拉加载更多</title>
+  <script src="./js/tool/jquery.min.js"></script>
+  <script src="./js/tool/topbar.min.js"></script>
+  <style>
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      background-color: #ffffff;
+    }
+
+    .container ul {
+      width: 100%;
+    }
+
+    .container ul li {
+      width: 50%;
+      height: 300px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      background-color: gray;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.9375rem;
+    }
+  </style>
+</head>
+
+<body>
+  <a class="baidu" href="https://www.baidu.com/"></a>
+  <div class="container">
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+    </ul>
+  </div>
+
+
+
+  <script src="./js/dropLoad.min.js"></script>
+
+  <script>
+    //  顶部加载进度条
+    topbar.config({
+      barThickness: 5,
+      barColors: {
+        '0': '#4cd964',
+        '.2': '#5ac8fa',
+        '.4': '#007aff',
+        '.6': '#34aadc',
+        '.8': '#5856d6',
+        '1.0': '#ff2d55'
+      },
+    })
+    let hh = new Dropload({
+      distanceEnd: 1000,
+      success: function () {
+        topbar.show()//显示度条
+        console.log('我已经到达底部！')
+        setTimeout(() => {
+          let text = `<li>9</li><li>9</li><li>9</li><li>9</li><li>9</li>`
+          $('.container ul').append(text)
+        }, 1000);
+        setTimeout(() => {
+          this.refresh()
+          // layer.close(index)
+          topbar.hide()
+        }, 1000)
+      }
+    })
+
+    let docH = document.body.clientWidth && document.documentElement.clientWidth
+    if (docH < 750) {
+      console.log('小于750')
+      // window.href = 'https://www.baidu.com/'
+      $('.baidu')[0].click()
+    }
+    
+
+
+    window.addEventListener('resize', () => {
+      let docH = document.body.clientWidth && document.documentElement.clientWidth
+      if (docH < 750) {
+        console.log('小于750')
+        // window.href = 'https://www.baidu.com/'
+        $('.baidu')[0].click()
+      }
+    })
+  </script>
+
+</body>
+
+</html>
